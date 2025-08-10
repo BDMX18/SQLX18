@@ -499,3 +499,163 @@ WHERE DEPTNO IN (SELECT DEPTNO
                 GROUP BY DEPTNO
                 HAVING COUNT(*) BETWEEN 3 AND 5);
 
+-- 61
+SELECT LOC
+FROM DEPT
+WHERE DEPTNO IN (SELECT DEPTNO
+                FROM EMP
+                WHERE MGR IN (SELECT EMPNO
+                              FROM EMP
+                              WHERE SAL > 2000));
+
+-- 62
+SELECT ENAME
+FROM EMP
+WHERE DEPTNO IN (SELECT DEPTNO
+                FROM DEPT
+                WHERE DNAME LIKE '%E_E%');
+
+-- 63
+SELECT ENAME, SAL
+FROM EMP
+WHERE SAL > ANY (SELECT SAL
+                FROM EMP
+                WHERE JOB = 'ANALYST');
+
+-- 64
+SELECT ENAME
+FROM EMP
+WHERE DEPTNO IN (SELECT DEPTNO
+                FROM DEPT
+                WHERE LOC = 'CHICAGO');
+
+-- 65
+SELECT ENAME
+FROM EMP
+WHERE SAL = (SELECT MIN(SAL)
+            FROM EMP
+            WHERE DEPTNO = (SELECT DEPTNO
+                           FROM DEPT
+                           WHERE DNAME = 'RESEARCH'));
+
+-- 66
+SELECT DNAME
+FROM DEPT
+WHERE DEPTNO IN (SELECT DEPTNO
+                FROM EMP
+                WHERE JOB = 'SALESMAN'); 
+
+-- 67
+SELECT DNAME
+FROM DEPT
+WHERE DEPTNO IN (SELECT DEPTNO
+                FROM EMP
+                GROUP BY DEPTNO
+                HAVING COUNT(*) > 2);
+
+-- 68
+SELECT ENAME
+FROM EMP
+WHERE DEPTNO IN (SELECT DEPTNO
+                FROM DEPT
+                WHERE DNAME IN ('RESEARCH', 'ACCOUNTING'))
+AND MGR IN (SELECT MGR
+            FROM EMP
+            GROUP BY MGR
+            HAVING COUNT(*) > 1);
+
+-- 69
+SELECT E.ENAME, E.JOB, E.LOC
+FROM (SELECT E1.ENAME, E1.JOB, D1.LOC
+      FROM EMP E1, DEPT D1
+      WHERE E1.DEPTNO = D1.DEPTNO) E
+WHERE E.JOB = 'MANAGER' AND E.LOC = 'CHICAGO';
+
+-- 70
+SELECT ENAME
+FROM EMP
+WHERE SAL =  (SELECT MAX(SAL)
+              FROM EMP
+              WHERE SAL < (SELECT MAX(SAL)
+                           FROM EMP
+                           WHERE DEPTNO = (SELECT DEPTNO
+                                           FROM DEPT
+                                           WHERE LOC = 'DALLAS')));
+
+-- 71
+SELECT *
+FROM EMP
+WHERE COMM IS NULL
+OR COMM = 0
+AND HIREDATE > '31-07-1983';
+
+-- 72
+SELECT ENAME
+FROM EMP
+WHERE DEPTNO IN (SELECT DEPTNO
+                FROM EMP
+                WHERE DEPTNO IN (SELECT DEPTNO
+                                FROM DEPT
+                                WHERE DNAME IN ('SALES', 'RESEARCH'))
+                GROUP BY DEPTNO
+                HAVING COUNT(*) > 1);
+
+-- 73
+SELECT ENAME
+FROM EMP
+WHERE COMM > (SELECT MAX(SAL)
+             FROM EMP
+             WHERE JOB = 'SALESMAN')
+AND MGR != (SELECT EMPNO
+           FROM EMP
+           WHERE ENAME = 'KING');
+
+-- 74
+SELECT LOC
+FROM DEPT
+WHERE DEPTNO IN (SELECT DEPTNO
+                FROM EMP
+                WHERE HIREDATE BETWEEN '01-01-1981' AND '31-12-1981');
+
+-- 75
+SELECT D1.DNAME, MIN(E1.SAL)
+FROM EMP E1, DEPT D1
+WHERE E1.DEPTNO = D1.DEPTNO
+GROUP BY D1.DNAME
+HAVING MIN(E1.SAL) < AVG(E1.SAL);
+
+-- 76
+SELECT ENAME
+FROM EMP
+WHERE MGR = (SELECT EMPNO
+            FROM EMP
+            WHERE ENAME = 'JONES');
+
+-- 77
+SELECT *
+FROM EMP
+WHERE DEPTNO IN (SELECT DEPTNO
+                FROM DEPT
+                WHERE LOC LIKE '%LL%');
+
+-- 78
+SELECT ENAME
+FROM EMP
+WHERE DEPTNO = 10
+AND SAL > ALL (SELECT SAL
+          FROM EMP
+          WHERE DEPTNO != 10);
+
+-- 79
+SELECT ENAME, JOB
+FROM EMP
+WHERE SAL IN (SELECT MAX(SAL)
+            FROM EMP
+            GROUP BY JOB);
+
+-- 80
+SELECT ENAME, EMPNO
+FROM EMP
+WHERE SAL = (SELECT MAX(SAL)
+          FROM EMP
+          WHERE JOB = 'CLERK');
