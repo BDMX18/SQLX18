@@ -100,3 +100,42 @@ FROM (SELECT ENAME, HIREDATE, ROWNUM AS "SLNO"
             FROM EMP
             ORDER BY HIREDATE))
 WHERE SLNO = 5;
+
+-- 3rd Record:
+
+SELECT *
+FROM (SELECT EMP.*, ROWNUM AS "SLNO"
+      FROM EMP)
+WHERE SLNO = 3;
+
+-- First 50% record:
+SELECT *
+FROM (SELECT EMP.*, ROWNUM AS "SLNO"
+      FROM EMP)
+WHERE SLNO <= (SELECT COUNT(*)/2
+              FROM EMP);
+
+-- Last Five Records:
+SELECT *
+FROM (SELECT EMP.*, ROWNUM AS "SLNO"
+      FROM EMP)
+WHERE SLNO > (SELECT COUNT(*) - 5
+              FROM EMP);
+
+-- Even records:
+SELECT *
+FROM (SELECT EMP.*, ROWNUM AS "SLNO"
+      FROM EMP)
+WHERE MOD(SLNO, 2) = 0;
+
+-- Odd Records:
+SELECT *
+FROM (SELECT EMP.*, ROWNUM AS "SLNO"
+      FROM EMP)
+WHERE MOD(SLNO, 2) != 0;
+
+-- 5th, 8th and 11th Record:
+SELECT *
+FROM (SELECT EMP.*, ROWNUM AS "SLNO"
+      FROM EMP)
+WHERE SLNO IN (5, 8, 11);
