@@ -1,11 +1,11 @@
--- 61
+-- 71
 SELECT ENAME
 FROM EMP
 WHERE EMPNO IN (SELECT MGR
                 FROM EMP
                 WHERE ENAME = 'SMITH');
 
--- 62
+-- 72
 SELECT ENAME
 FROM EMP
 WHERE EMPNO IN (SELECT MGR
@@ -14,7 +14,7 @@ WHERE EMPNO IN (SELECT MGR
                                 FROM EMP
                                 WHERE ENAME = 'ADAMS'));
 
--- 63
+-- 73
 SELECT DNAME
 FROM DEPT
 WHERE DEPTNO IN (SELECT DEPTNO
@@ -23,14 +23,14 @@ WHERE DEPTNO IN (SELECT DEPTNO
                                 FROM EMP
                                 WHERE ENAME ='JONES'));
 
--- 64
+--74
 SELECT SAL
 FROM EMP
 WHERE EMPNO IN (SELECT MGR
                 FROM EMP
                 WHERE ENAME = 'MILLER');
 
--- 65
+-- 75
 SELECT LOC
 FROM DEPT
 WHERE DEPTNO IN (SELECT DEPTNO
@@ -41,28 +41,28 @@ WHERE DEPTNO IN (SELECT DEPTNO
                                                 FROM EMP
                                                 WHERE ENAME = 'SMITH')));
 
--- 66
+-- 76
 SELECT ENAME
 FROM EMP
 WHERE MGR = (SELECT EMPNO
             FROM EMP
             WHERE ENAME = 'BLAKE');
 
--- 67
+-- 77
 SELECT COUNT(*)
 FROM EMP
 WHERE MGR = (SELECT EMPNO
             FROM EMP
             WHERE ENAME = 'KING');
 
--- 68
+-- 78
 SELECT *
 FROM EMP
 WHERE MGR = (SELECT EMPNO
             FROM EMP
             WHERE ENAME = 'JONES');
 
--- 69
+-- 79
 SELECT ENAME
 FROM EMP
 WHERE MGR = (SELECT MGR
@@ -70,7 +70,7 @@ WHERE MGR = (SELECT MGR
             WHERE ENAME = 'BLAKE')
 AND ENAME != 'BLAKE';
 
--- 70
+-- 80
 SELECT COUNT(*)
 FROM EMP
 WHERE MGR = (SELECT MGR
